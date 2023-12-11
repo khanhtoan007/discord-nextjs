@@ -3,7 +3,7 @@ import { set } from "zod";
 import { create } from "zustand";
 
 
-export type ModalType = "createServe" | "invite";
+export type ModalType = "createServe" | "invite" | "editServer";
 
 interface ModalData{
     server?: Server
@@ -16,6 +16,8 @@ interface ModalStore {
     onOpen: (type: ModalType, data?: ModalData  ) => void;
     onClose: () => void;
 }
+
+
 
 export const useModal = create<ModalStore>((set) => ({
     type:null,
