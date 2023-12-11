@@ -2,8 +2,8 @@
 
 import { ServerWithMembersWithProfiles } from "@/types";
 import { MemberRole, Server } from "@prisma/client";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ChevronDown, PlusCircle, Settings, UserPlus, Users } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ChevronDown, LogOut, PlusCircle, Settings, Trash, UserPlus, Users } from "lucide-react";
 
 interface ServerHeaderProps {
     server: ServerWithMembersWithProfiles;
@@ -15,7 +15,7 @@ export const ServerHeader = ( {
     role
 }: ServerHeaderProps)=> {
     const isAdmin = role === MemberRole.ADMIN;
-    const isModerator = role === MemberRole.MODERATOR;
+    const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
     return(
         <DropdownMenu>
@@ -62,6 +62,25 @@ export const ServerHeader = ( {
                     >
                         Create Channel
                         <PlusCircle className="h-4 w-4 ml-auto" />
+                    </DropdownMenuItem>
+                )}
+                {isModerator && (
+                    <DropdownMenuSeparator/>
+                )}
+                {isAdmin && (
+                    <DropdownMenuItem
+                     className="text-rose-600 px-3 py-2 text-sm cursor-pointer"
+                    >
+                        Delete Server
+                        <Trash className="h-4 w-4 ml-auto" />
+                    </DropdownMenuItem>
+                )}
+                {!isAdmin && (
+                    <DropdownMenuItem
+                     className="text-rose-600 px-3 py-2 text-sm cursor-pointer"
+                    >
+                        Delete Server
+                        <LogOut className="h-4 w-4 ml-auto" />
                     </DropdownMenuItem>
                 )}
             </DropdownMenuContent>
